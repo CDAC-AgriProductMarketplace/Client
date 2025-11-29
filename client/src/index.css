@@ -1,1 +1,82 @@
-@import "tailwindcss";
+/* -----------------------------------------
+   Tailwind Base Layers
+------------------------------------------ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------------------
+   CUSTOM THEME (Converted from tailwind.config.js)
+   Using CSS variables for easy access in Tailwind classes
+------------------------------------------ */
+
+:root {
+  /* Primary */
+  --primary: #10B981;
+  --primary-darker: #059669;
+
+  /* Secondary */
+  --secondary: #065F46;
+
+  /* Surfaces */
+  --surface-light: #FFFFFF;
+  --surface-medium: #F9FAFB;
+  --surface-dark: #1F2937;
+  --surface-darker: #111827;
+
+  /* Text Colors */
+  --text-default: #1F2937;
+  --text-secondary: #4B5563;
+  --text-light: #F9FAFB;
+  --text-dark: #1F2937;
+
+  /* Border */
+  --border-color: #E5E7EB;
+}
+
+/* -----------------------------------------
+   DARK MODE VARIABLES
+   (matches darkMode: 'class')
+------------------------------------------ */
+
+html.dark {
+  --surface-light: #1F2937;
+  --surface-medium: #111827;
+
+  --text-default: #F9FAFB;
+  --text-secondary: #D1D5DB;
+}
+
+/* -----------------------------------------
+   CUSTOM UTILITIES (matches the Tailwind config extend)
+------------------------------------------ */
+
+/* Background utilities */
+.bg-primary { background-color: var(--primary); }
+.bg-primary-darker { background-color: var(--primary-darker); }
+.bg-secondary { background-color: var(--secondary); }
+
+.bg-surface-light { background-color: var(--surface-light); }
+.bg-surface-medium { background-color: var(--surface-medium); }
+.bg-surface-dark { background-color: var(--surface-dark); }
+.bg-surface-darker { background-color: var(--surface-darker); }
+
+/* Text color utilities */
+.text-default { color: var(--text-default); }
+.text-secondary { color: var(--text-secondary); }
+.text-light { color: var(--text-light); }
+.text-dark { color: var(--text-dark); }
+
+/* Border color utility */
+.border-custom { border-color: var(--border-color); }
+
+/* Shadows */
+.shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-card-hover:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -2px rgba(0, 0, 0, 0.06);
+}
