@@ -7,14 +7,14 @@ import Home from "./pages/home/Home";
 
 function App() {
   return (
-    <body className="font-[Geist] antialiased flex flex-col min-h-screen bg-gray-50 text-gray-800">
+    <div className="font-[Geist] antialiased flex flex-col min-h-screen bg-gray-50 text-gray-800">
       <Navbar />
 
       {/* Middle strip  Category*/}
       <FeatureStrip />
 
       {/* Page content */}
-      <div className="flex-grow sm:py-4 xs:py-2  md:py-8">
+      <div className="flex-grow sm:py-4 xs:py-2 px-4 md:py-8">
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
@@ -22,7 +22,7 @@ function App() {
 
       {/* Footer */}
       <Footer />
-    </body>
+    </div>
   );
 }
 
