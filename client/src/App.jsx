@@ -1,15 +1,25 @@
-import { useTheme } from "./context/ThemeContext";
-import Login from "./pages/authentication/Login";
+import Navbar from "./components/layout/Navbar";
+import "./App.css";
+import FeatureStrip from "./components/utils-components/FeatureStrip";
+import Footer from "./components/layout/Footer";
+
 function App() {
   return (
-    
-    <div className="min-h-screen bg-surface-light text-text-DEFAULT dark:bg-surface-dark dark:text-text-light transition-colors duration-300">
-      <button className="bg-primary hover:bg-primary-darker text-white font-bold py-2 px-4 rounded shadow-card hover:shadow-card-hover transition-all duration-200 m-4">
-        Submit Order
-      </button>
+    <body className="font-[Geist] antialiased flex flex-col min-h-screen bg-gray-50 text-gray-800">
+      <Navbar />
 
-    </div>
-  )
+      {/* Middle strip  Category*/}
+      <FeatureStrip />
+
+      {/* Page content */}
+      <main className="flex-grow container mx-auto px-4 py-8">
+        {/* Put your routes or page content here */}
+      </main>
+
+      {/* Footer */}
+      <Footer />
+    </body>
+  );
 }
 
-export default App
+export default App;
