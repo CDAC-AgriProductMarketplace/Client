@@ -2,6 +2,8 @@ import Navbar from "./components/layout/Navbar";
 import "./App.css";
 import FeatureStrip from "./components/utils-components/FeatureStrip";
 import Footer from "./components/layout/Footer";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -12,9 +14,11 @@ function App() {
       <FeatureStrip />
 
       {/* Page content */}
-      <main className="flex-grow container mx-auto px-4 py-8">
-        {/* Put your routes or page content here */}
-      </main>
+      <div className="flex-grow sm:py-4 xs:py-2  md:py-8">
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
 
       {/* Footer */}
       <Footer />
