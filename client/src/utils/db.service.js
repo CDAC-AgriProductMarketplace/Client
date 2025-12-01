@@ -26,19 +26,19 @@ const data = {
     // =======================
     //  GROWTH REGULATORS
     // =======================
-    { id: 1, brand: 'AgroMax', category: "Growth Regulators", name: 'Humic Acid Boost', price: 20.45, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2022/07/MoliCare-Pad-4-Drops-865ml.jpg' },
+    { id: 1, brand: 'AgroMax', category: "Growth Regulators", name: 'Humic Acid Boost', price: 20.45, gst: 0, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F3748729181735026400.webp&w=750&q=75' },
     { id: 2, brand: 'GreenFarm', category: "Growth Regulators", name: 'Yield Booster Pro', price: 45.20, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/08/40183.jpg' },
-    { id: 3, brand: 'BioGrow', category: "Growth Regulators", name: 'Advanced Zymes', price: 18.95, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2022/07/Medi-Derm-Barrier-Cream-500g.jpg' },
-    { id: 4, brand: 'PH Control', category: "Growth Regulators", name: 'pH Balancer Liquid', price: 32.45, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/05/168100-new.jpg' },
+    { id: 3, brand: 'BioGrow', category: "Growth Regulators", name: 'Advanced Zymes', price: 18.95, gst: 0, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F13925455601733207058.webp&w=750&q=75' },
+    { id: 4, brand: 'PH Control', category: "Growth Regulators", name: 'pH Balancer Liquid', price: 32.45, gst: 0, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F20447868851735639283.webp&w=1080&q=75' },
 
     // =======================
     //  ORGANIC FARMING
     // =======================
     { id: 5, brand: 'OrganicPro', category: "Organic Farming", name: 'Bio Fertilizer Mix', price: 12.45, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/07/COFFEE-400-EA.jpg' },
-    { id: 6, brand: 'EcoLife', category: "Organic Farming", name: 'Bio Pesticides Liquid', price: 22.35, gst: 2.75, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/11/4550590.jpeg' },
+    { id: 6, brand: 'EcoLife', category: "Organic Farming", name: 'Bio Pesticides Liquid', price: 22.35, gst: 2.75, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F20447868851735639283.webp&w=1080&q=75' },
     { id: 7, brand: 'NatureFresh', category: "Organic Farming", name: 'Organic Nutrients Powder', price: 13.85, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/06/385100.jpg' },
     { id: 8, brand: 'NeemPure', category: "Organic Farming", name: 'Neem Oil Concentrate', price: 19.99, gst: 1.99, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/04/CO-16.5250R.jpg' },
-    { id: 9, brand: 'AgriEarth', category: "Organic Farming", name: 'Vermi Compost Premium', price: 9.75, gst: 0, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2025/01/831042420.jpeg' },
+    { id: 9, brand: 'AgriEarth', category: "Organic Farming", name: 'Vermi Compost Premium', price: 9.75, gst: 0, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F19187858821726114451.webp&w=1080&q=75' },
 
     // =======================
     //  SEEDS
@@ -68,7 +68,7 @@ const data = {
     // =======================
     //  CROP PROTECTION
     // =======================
-    { id: 19, brand: 'CropShield', category: "Crop Protection", name: 'Insecticide Spray 500ml', price: 17.85, gst: 19.75, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2025/01/831042420.jpeg' },
+    { id: 19, brand: 'CropShield', category: "Crop Protection", name: 'Insecticide Spray 500ml', price: 17.85, gst: 19.75, image: 'https://agribegri.com/_next/image?url=https%3A%2F%2Fdujjhct8zer0r.cloudfront.net%2Fmedia%2Fprod_image%2F20447868851735639283.webp&w=1080&q=75' },
     { id: 20, brand: 'SafeCrop', category: "Crop Protection", name: 'Fungicide Liquid', price: 335.50, gst: 368.50, image: 'https://joyamedicalsupplies.com.au/wp-content/uploads/2024/08/TMFIVP2H.jpg' }
   ],
 
