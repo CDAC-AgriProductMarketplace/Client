@@ -59,7 +59,7 @@ function Navbar() {
               <ShoppingBagIcon className="h-6 w-6 text-primary cursor-pointer" />
               <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
-            <Link href="/auth" className="flex items-center space-x-1 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <Link to="/login" className="flex items-center space-x-1 p-2 rounded-lg hover:bg-gray-100 transition-colors">
               <UserIcon className="h-6 w-6    white cursor-pointer" />
               <span className="font-semibold whitespace-nowrap">Log In & Register</span>
             </Link>

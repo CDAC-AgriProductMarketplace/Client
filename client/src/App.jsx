@@ -4,6 +4,7 @@ import FeatureStrip from "./components/utils-components/FeatureStrip";
 import Footer from "./components/layout/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
+import Login from "./pages/authentication/Login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <div className="flex-grow sm:py-4 xs:py-2 px-4 md:py-8">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
 
