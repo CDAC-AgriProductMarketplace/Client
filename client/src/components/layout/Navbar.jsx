@@ -5,7 +5,7 @@ import { PhoneIcon, ShoppingBagIcon, UserIcon } from '@heroicons/react/24/solid'
 
 function Navbar() {
   return (
-     <header className="w-full shadow-md  relative z-50">
+    <header className="w-full shadow-md  relative z-50">
       {/* ====== TOP BAR ====== */}
       <div className={`bg-primary text-white py-2 text-xs sm:text-sm`}>
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 text-center sm:text-left">
@@ -28,7 +28,7 @@ function Navbar() {
               width={160} // Set a base width
               height={48}  // Set a base height
               className="h-10 sm:h-12 w-auto" // Tailwind classes for responsive sizing
-             
+
             />
             <h3 className='text-primary'>AgriForge</h3>
           </Link>
@@ -63,22 +63,30 @@ function Navbar() {
               <UserIcon className="h-6 w-6    white cursor-pointer" />
               <span className="font-semibold whitespace-nowrap">Log In & Register</span>
             </Link>
+            <Link to="/profile" className=" flex items-center p-2 bg-green-50   rounded-lg shadow-sm hover:bg-green-100  transition duration-150 font-medium text-lg">
+              <UserIcon className="h-6 w-6    white cursor-pointer" />
+
+              Profile
+            </Link>
           </div>
 
           {/* Mobile Icons (Replaces Hamburger Menu) */}
           <div className="lg:hidden flex items-center space-x-2 sm:space-x-4 order-2 lg:order-3">
-             <a href="tel:9604926181" aria-label="Call us" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <PhoneIcon className={`h-6 w-6 text-primary`} />
-             </a>
-             <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <ShoppingBagIcon className={`h-6 w-6 text-primary`}  />
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-             </Link>
-             <Link to="/login" aria-label="Log in or register" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <UserIcon className={`h-6 w-6 text-primary`}  />
-             </Link>
+            <a href="tel:9604926181" aria-label="Call us" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <PhoneIcon className={`h-6 w-6 text-primary`} />
+            </a>
+            <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <ShoppingBagIcon className={`h-6 w-6 text-primary`} />
+              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </Link>
+            <Link to="/login" aria-label="Log in or register" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <UserIcon className={`h-6 w-6 text-primary`} />
+            </Link>
+            <Link to="/profile" aria-label="Profile" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <UserIcon className={`h-6 w-6 text-primary`} />
+            </Link>
           </div>
-          
+
         </div>
       </div>
     </header>
