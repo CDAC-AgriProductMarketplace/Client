@@ -10,7 +10,7 @@ function Navbar() {
       <div className={`bg-primary text-white py-2 text-xs sm:text-sm`}>
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 text-center sm:text-left">
           <p className="mb-1 sm:mb-0">Welcome to AgriForge Supplies - you&apos;ll love the way we care for you!</p>
-          <Link href="/request-catalogue" className="hover:underline">
+          <Link to="/request-catalogue" className="hover:underline">
             Request Catalogue
           </Link>
         </div>
@@ -21,7 +21,7 @@ function Navbar() {
         <div className="container mx-auto flex flex-wrap items-center justify-between px-4 gap-4">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img
               src="/favicon.ico"
               alt="AgriForge Suppliers "
@@ -55,7 +55,7 @@ function Navbar() {
                 <p className="font-bold text-base whitespace-nowrap">96 0492 6181</p>
               </div>
             </div>
-            <Link href="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+            <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
               <ShoppingBagIcon className="h-6 w-6 text-primary cursor-pointer" />
               <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
@@ -70,11 +70,11 @@ function Navbar() {
              <a href="tel:9604926181" aria-label="Call us" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <PhoneIcon className={`h-6 w-6 text-primary`} />
              </a>
-             <Link href="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+             <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <ShoppingBagIcon className={`h-6 w-6 text-primary`}  />
                 <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
              </Link>
-             <Link href="/auth" aria-label="Log in or register" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+             <Link to="/login" aria-label="Log in or register" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <UserIcon className={`h-6 w-6 text-primary`}  />
              </Link>
           </div>

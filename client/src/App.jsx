@@ -5,6 +5,8 @@ import Footer from "./components/layout/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/authentication/Login";
+import Cart from './pages/Cart';
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Login />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
 
