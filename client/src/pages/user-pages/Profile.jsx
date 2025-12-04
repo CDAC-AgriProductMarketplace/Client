@@ -8,14 +8,15 @@ import ProfileCard from './ProfileCard';
 import ProfileNav from './ProfileNav';
 import ShippingBilling from './ShippingBilling';
 import UserOrders from './orders/UserOrders';
+import OrderListPage from './orders/OrderListPage';
+import { Link } from 'react-router-dom';
 
 // --- Data Mockup (to populate the components) ---
 const userData = {
   name: "Ramesh Kumar",
-  title: "Vegetable farmer",
-  memberSince: "Since 2025",
+  mobile: "+91 98765 43210",
+  email: "ramesh.kumar@example.com",
   deliveries: 4,
-  onTime: "98%",
   farmAddress: "Ramesh Kumar, Village Road, Plot 17",
   billingDetails: "UPI •••• 9201",
 };
@@ -49,7 +50,15 @@ const orders = [
 const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      
       <div className="max-w-6xl mx-auto">
+        <nav className="text-sm mb-6 text-gray-600">
+          <Link to="/" className="hover:text-primary">
+            Home
+          </Link>
+          <span className="mx-2">»</span>
+          <span>My Account</span>
+        </nav>
         <h1 className="text-2xl font-bold text-gray-800 mb-6 hidden md:block">
           My Profile
         </h1>
@@ -74,7 +83,7 @@ const Profile = () => {
             </div>
 
             {/* Order History */}
-            <UserOrders orders={orders} />
+            <OrderListPage/>
 
             {/* Account Settings */}
             <Settings />

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import UserOrders from "./UserOrders";
 
 const dummyOrders = [
@@ -8,7 +9,7 @@ const dummyOrders = [
 
 export default function OrderListPage() {
   return (
-    <div className="max-w-3xl mx-auto mt-10">
+    <div className="mx-auto p-4  lg:max-w-none ">
       <UserOrders orders={dummyOrders} />
     </div>
   );

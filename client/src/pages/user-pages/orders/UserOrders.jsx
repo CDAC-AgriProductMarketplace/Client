@@ -85,13 +85,14 @@ const UserOrders = ({ orders }) => {
           <OrderItem key={order.orderId} order={order} />
         ))}
       </div>
-
+      
+{/* 
       <button
         onClick={handleDownloadReport}
         className="w-full text-center border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 rounded-lg transition duration-150 text-sm"
       >
         Download last month's report
-      </button>
+      </button> */}
     </div>
   );
 };

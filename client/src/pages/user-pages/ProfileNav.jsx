@@ -35,11 +35,11 @@ const ProfileNav = ({ isMobile = false }) => {
 
   const navItems = [
     { icon: User, label: "Profile overview", description: "View and update your basic info" },
-    { icon: ShoppingBag, label: "Order history", description: "Track, download invoices" },
+    // { icon: ShoppingBag, label: "Order history", description: "Track, download invoices" },
     { icon: Settings, label: "Account settings", description: "Login, alerts, preferences" },
     { icon: MapPin, label: "Shipping & billing", description: "Addresses and payment methods" },
-    { icon: Heart, label: "Wishlist", description: "Save items for later" },
-    { icon: Lightbulb, label: "Recommendations", description: "Based on your farm needs" },
+    // { icon: Heart, label: "Wishlist", description: "Save items for later" },
+    // { icon: Lightbulb, label: "Recommendations", description: "Based on your farm needs" },
   ];
 
   return (
