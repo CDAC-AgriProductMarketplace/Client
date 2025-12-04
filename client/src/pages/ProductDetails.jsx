@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+// SWIPER IMPORTS
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
 
-  // Fetch from backend later
   useEffect(() => {
     fetch("http://localhost:8080/api/products/1")
       .then((res) => res.json())
@@ -18,7 +23,6 @@ const ProductDetails = () => {
           price: 500,
           rating: 4.6,
           stock: 25,
-          image: "\images\shovel.jpg",
           features: [
             "Strong carbon-steel blade that cuts through compact soil.",
             "Anti-slip comfort grip for better handling.",
@@ -41,14 +45,46 @@ const ProductDetails = () => {
     <div className="w-full p-6 bg-[#f5f7f6] min-h-screen">
       {/* MAIN TOP GRID */}
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
-        {/* LEFT IMAGE */}
+
+        {/* LEFT IMAGE SLIDER */}
         <div className="col-span-4">
           <div className="bg-white p-4 rounded-xl shadow-sm">
-            <img
-              src={product.image}
-              alt="product"
-              className="w-full h-[380px] object-cover rounded-lg"
-            />
+
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              spaceBetween={10}
+              className="rounded-lg"
+            >
+              <SwiperSlide>
+                <img
+                  src="/images/shovel1.jpg"
+                  className="w-full h-[380px] object-cover rounded-lg"
+                />
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <img
+                  src="/images/shovel2.jpg"
+                  className="w-full h-[380px] object-cover rounded-lg"
+                />
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <img
+                  src="/images/shovel3.jpg"
+                  className="w-full h-[380px] object-cover rounded-lg"
+                />
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <img
+                  src="/images/shovel4.jpg"
+                  className="w-full h-[380px] object-cover rounded-lg"
+                />
+              </SwiperSlide>
+            </Swiper>
+
           </div>
         </div>
 
@@ -59,12 +95,10 @@ const ProductDetails = () => {
 
             <p className="text-sm text-gray-500 mt-1">{product.description}</p>
 
-            {/* Price */}
             <div className="mt-4">
               <span className="text-xl font-bold">₹{product.price}</span>
             </div>
 
-            {/* Features */}
             <div className="mt-4 border p-3 bg-yellow-50 rounded-md text-sm">
               <p className="font-semibold">Features:</p>
               <ul className="list-disc ml-5 mt-1 text-gray-700">
@@ -74,7 +108,6 @@ const ProductDetails = () => {
               </ul>
             </div>
 
-            {/* Product Description */}
             <div className="mt-4 text-sm text-gray-700">
               <p>
                 This carbon steel shovel is ideal for daily farm work—digging,
@@ -90,18 +123,11 @@ const ProductDetails = () => {
             <h3 className="text-xl font-semibold mb-2">₹{product.price}</h3>
 
             <p className="text-sm text-green-700">Eligible for FREE delivery</p>
-            <p className="text-xs text-gray-600">
-              Delivery in 2–3 business days
-            </p>
+            <p className="text-xs text-gray-600">Delivery in 2–3 business days</p>
 
-            {/* Stock */}
             <div className="mt-4 text-sm">
               <p className="font-semibold">Stock:</p>
-              <p
-                className={
-                  product.stock > 0 ? "text-green-600" : "text-red-600"
-                }
-              >
+              <p className={product.stock > 0 ? "text-green-600" : "text-red-600"}>
                 {product.stock > 0 ? "Available" : "Out of stock"}
               </p>
             </div>
@@ -119,11 +145,11 @@ const ProductDetails = () => {
 
       {/* LOWER GRID SECTIONS */}
       <div className="max-w-7xl mx-auto mt-8 grid grid-cols-12 gap-6">
+
         {/* PRODUCT SPECS */}
         <div className="col-span-6">
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-semibold mb-4">Product Details</h2>
-
             <div className="grid grid-cols-2 gap-y-3 text-sm">
               <p className="text-gray-500">Crops</p>
               <p>{product.specs.crops}</p>
@@ -147,8 +173,8 @@ const ProductDetails = () => {
         <div className="col-span-6">
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-semibold">Customer Reviews</h2>
-
             <p className="text-4xl font-bold mt-2">{product.rating}</p>
+
             <div className="w-full bg-gray-200 h-2 rounded mt-2">
               <div
                 className="bg-yellow-400 h-2 rounded"
@@ -162,7 +188,7 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* USAGE SECTION */}
+        {/* USAGE */}
         <div className="col-span-6">
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-semibold mb-3">Usage & Care</h2>
@@ -173,12 +199,10 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* CUSTOMERS ALSO BOUGHT */}
+        {/* ALSO BOUGHT */}
         <div className="col-span-6">
           <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h2 className="text-lg font-semibold mb-3">
-              Customers Also Bought
-            </h2>
+            <h2 className="text-lg font-semibold mb-3">Customers Also Bought</h2>
 
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
@@ -198,6 +222,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
