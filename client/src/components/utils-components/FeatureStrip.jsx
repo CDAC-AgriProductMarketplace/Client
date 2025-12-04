@@ -4,40 +4,28 @@ import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid
 import "../../../src/index.css";
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { 
-    name: 'Growth Regulators', 
-    href: '/growth-regulators',
-    submenu: [
-      { name: 'Humic Acid', href: '/growth-regulators/humic-acid' },
-      { name: 'Yeild booster', href: '/growth-regulators/yield-booster' },
-      { name: 'Zymes', href: '/growth-regulators/zymes' },
-      { name: 'pH Balancer', href: '/growth-regulators/ph-balancer' },
-    ]
-  },
-  { name: 'Organic Farming', href: '/organic-farming',
-    submenu: [
-      { name: 'Bio Fertilizers', href: '/organic-farming/bio-fertilizers' },
-      { name: 'Bio Pesticides', href: '/organic-farming/bio-pesticides' },
-      { name: 'Organic Nutrients', href: '/organic-farming/organic-nutrients' },
-      { name: 'Neem Oil', href: '/organic-farming/neem-oil' },
-      { name: 'Vermi Compost', href: '/organic-farming/vermi-compost' },
-    ]
-  },
-  { name: 'Seeds', href: '/seeds', submenu: [
-    { name: 'Vegetable Seeds', href: '/seeds/vegetable-seeds' },
-    { name: 'Flower Seeds', href: '/seeds/flower-seeds' },
-  ]},
-  { name: 'Fertilizers', href: '/fertilizers', 
-    submenu: [
-    { name: 'Bio-Fertilizers', href: '/fertilizers/bio-fertilizers' },
-    { name: 'Organic Fertilizers', href: '/fertilizers/organic-fertilizers' },
-    { name: 'Liquid Fertilizers', href: '/fertilizers/liquid-fertilizers' },
-  ]},
-  { name: 'Irrigation', href: '/irrigation' },
-  { name: 'Gardening', href: '/gardening' },
-  { name: 'Crop Protection', href: '/crop-protection' }
-];
+  { name: 'Growth Regulators', href: 'growth-regulators', 
+    submenu: [{ name: 'Humic Acid', href: 'humic-acid' }, 
+      { name: 'Yeild booster', href: 'yield-booster' }, 
+      { name: 'Zymes', href: 'zymes' }, 
+      { name: 'pH Balancer', href: 'ph-balancer' },] }, 
+      { name: 'Organic Farming', href: 'organic-farming', 
+        submenu: [{ name: 'Bio Fertilizers', href: 'bio-fertilizers' }, 
+          { name: 'Bio Pesticides', href: 'bio-pesticides' }, 
+          { name: 'Organic Nutrients', href: 'organic-nutrients' }, 
+          { name: 'Neem Oil', href: 'neem-oil' }, 
+          { name: 'Vermi Compost', href: 'vermi-compost' },] }, 
+          { name: 'Seeds', href: 'seeds', 
+            submenu: [{ name: 'Vegetable Seeds', href: 'vegetable-seeds' }, 
+              { name: 'Flower Seeds', href: 'flower-seeds' },
+            ] }, 
+          { name: 'Fertilizers', href: 'fertilizers', 
+                submenu: [{ name: 'Bio-Fertilizers', href: 'bio-fertilizers' }, 
+                  { name: 'Organic Fertilizers', href: 'organic-fertilizers' }, 
+                  { name: 'Liquid Fertilizers', href: 'liquid-fertilizers' },] }, 
+          { name: 'Irrigation', href: 'irrigation' }, 
+          { name: 'Gardening', href: 'gardening' }, 
+          { name: 'Crop Protection', href: 'crop-protection' }];
 
 export default function FeatureStrip() {
   const [openDesktopMenu, setOpenDesktopMenu] = useState(null);
@@ -72,7 +60,12 @@ export default function FeatureStrip() {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center justify-center space-x-6  text-medium font-medium text-gray-600 h-14">
+        <ul className="hidden lg:flex items-center justify-center space-x-6 text-medium font-medium text-gray-600 h-14">
+          <Link
+                to={"/" }
+                className={`flex items-center ${getSpecialLinkClass('home')}`}
+              >Home
+              </Link>
           {navLinks.map((link) => (
             <li
               key={link.name}
@@ -80,16 +73,24 @@ export default function FeatureStrip() {
               onMouseEnter={() => link.submenu && setOpenDesktopMenu(link.name)}
               onMouseLeave={() => link.submenu && setOpenDesktopMenu(null)}
             >
-              <Link to={link.href} className={`flex items-center ${getSpecialLinkClass(link.special)}`}>
+              {/* Main category link */}
+              <Link
+                to={link.submenu ? "#" : `/products/${link.href}`}
+                className={`flex items-center ${getSpecialLinkClass(link.special)}`}
+              >
                 {link.name}
                 {link.submenu && <ChevronDownIcon className="h-4 w-4 ml-1" />}
               </Link>
 
+              {/* Desktop Submenu */}
               {link.submenu && openDesktopMenu === link.name && (
                 <ul className="absolute top-full left-0 bg-white shadow-lg rounded-b-lg border w-48 py-2 z-50">
                   {link.submenu.map((sub) => (
                     <li key={sub.name}>
-                      <Link to={sub.href} className="block px-4 py-2 hover:bg-surface-light hover:text-white">
+                      <Link
+                        to={`/products/${link.href}/${sub.href}`}
+                        className="block px-4 py-2 hover:bg-surface-light hover:text-white"
+                      >
                         {sub.name}
                       </Link>
                     </li>
@@ -113,13 +114,20 @@ export default function FeatureStrip() {
                         className={`w-full flex justify-between items-center px-3 py-2 ${getSpecialLinkClass(link.special)}`}
                       >
                         {link.name}
-                        <ChevronDownIcon className={`h-5 w-5 ${openMobileSubmenu === link.name ? 'rotate-180' : ''}`} />
+                        <ChevronDownIcon
+                          className={`h-5 w-5 ${openMobileSubmenu === link.name ? 'rotate-180' : ''}`}
+                        />
                       </button>
+
+                      {/* Mobile Submenu */}
                       {openMobileSubmenu === link.name && (
                         <ul className="pl-6 pt-2 space-y-1">
                           {link.submenu.map((s) => (
                             <li key={s.name}>
-                              <Link to={s.href} className="block px-3 py-2 hover:bg-gray-100 hover:text-primary">
+                              <Link
+                                to={`/products/${link.href}/${s.href}`}
+                                className="block px-3 py-2 hover:bg-gray-100 hover:text-primary"
+                              >
                                 {s.name}
                               </Link>
                             </li>
@@ -128,7 +136,11 @@ export default function FeatureStrip() {
                       )}
                     </div>
                   ) : (
-                    <Link to={link.href} className={`block px-3 py-2 ${getSpecialLinkClass(link.special)}`}>
+                    /* Category WITHOUT submenu */
+                    <Link
+                      to={`/products/${link.href}`}
+                      className={`block px-3 py-2 ${getSpecialLinkClass(link.special)}`}
+                    >
                       {link.name}
                     </Link>
                   )}
@@ -140,5 +152,6 @@ export default function FeatureStrip() {
 
       </div>
     </nav>
+
   );
 }
