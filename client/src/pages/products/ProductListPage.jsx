@@ -8,9 +8,8 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../utils/db.service';
 
 const ProductListPage = () => {
-    
-    const[allProducts, setAllProducts] = useState([]); // For demo purposes only
-   const [currentSubcategory, setCurrentSubcategory] = useState('Humic Acid');
+    const [allProducts, setAllProducts] = useState([]); // For demo purposes only
+    const [currentSubcategory, setCurrentSubcategory] = useState('Humic Acid');
     const [currentCategory, setCurrentCategory] = useState('Soil Enhancers');
     const [subcategories, setSubcategories] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -21,7 +20,7 @@ const ProductListPage = () => {
     const [filters, setFilters] = useState({
         // Initialize filters based on the current page's context
         categories: currentCategory ? [currentCategory] : [],
-        subcategories: currentSubcategory ? [currentSubcategory] : [], 
+        subcategories: currentSubcategory ? [currentSubcategory] : [],
         brands: [],
         minPrice: 0,
         maxPrice: 1000,
@@ -30,12 +29,16 @@ const ProductListPage = () => {
 
 
     const productsToFilter = Array.isArray(allProducts) ? allProducts : [];
-    
+
     const filteredProducts = productsToFilter.filter(product => {
-          if (currentSubcategory && filters.categories.length > 0 && !filters.categories.includes(product.category && (product.category.toLowerCase().replace(' ', '-')))) {
-            return false;
-        }
-        if (  filters.subcategories.length > 0 && !filters.subcategories.includes(product.subcategory && (product.subcategory.toLowerCase().replace(' ', '-')))) {
+
+        // if (filters.subcategories.length > 0 && !filters.subcategories.includes(product.subcategory && (product.subcategory.toLowerCase().replace(' ', '-')))) {
+        //     return false;
+        // }
+        if (
+            (filters.subcategories.length > 0 && !filters.subcategories.includes(product.subcategory && (product.subcategory.toLowerCase().replace(' ', '-')))) &&
+            (currentSubcategory && filters.categories.length > 0 && !filters.categories.includes(product.category && (product.category.toLowerCase().replace(' ', '-'))))
+        ) {
             return false;
         }
         // 3. Brand Filter
@@ -50,7 +53,7 @@ const ProductListPage = () => {
         if (filters.rating && product.rating < filters.rating) {
             return false;
         }
-      
+
         return true;
     });
 
@@ -61,7 +64,7 @@ const ProductListPage = () => {
         if (sort === 'rating') return b.rating - a.rating;
         return 0; // Relevance default
     });
-    
+
     const activeFiltersCount = filters.subcategories.length + filters.brands.length + (filters.rating ? 1 : 0);
 
     // If no main category is provided, render a message
@@ -79,52 +82,53 @@ const ProductListPage = () => {
     const { category, subcategory } = useParams();
 
 
-   useEffect(() => {
-       setCurrentCategory(category);
-    setCurrentSubcategory(subcategory);
-    setFilters(prev => ({
-        ...prev,
-        subcategories: subcategory ? [subcategory] : [],
-    }));
-    
+    useEffect(() => {
+        setCurrentCategory(category);
+        setCurrentSubcategory(subcategory);
+        setFilters(prev => ({
+            ...prev,
+            subcategories: subcategory ? [subcategory] : [],
+            category: category ? [category] : [],
+        }));
 
-  const fetchData = async () => {
-    const products = await db.getProducts();
-    const categoryMapped =await db.getCategoryMap();
-    setSubcategories(categoryMapped[category] || []);
-    setCategories(Object.keys(categoryMapped));
-    setAllProducts(products);
-  };
 
-  fetchData();
-}, [category, subcategory]);
+        const fetchData = async () => {
+            const products = await db.getProducts();
+            const categoryMapped = await db.getCategoryMap();
+            setSubcategories(categoryMapped[category] || []);
+            setCategories(Object.keys(categoryMapped) || []);
+            setAllProducts(products);
+        };
+
+        fetchData();
+    }, [category, subcategory]);
 
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
             <div className="max-w-7xl mx-auto">
-                
+
                 {/* Header and Breadcrumb */}
                 <header className="mb-6 md:mb-8">
                     <p className="text-sm text-gray-500 mb-1">
                         Home / {currentCategory} {currentSubcategory && `/ ${currentSubcategory}`}
                     </p>
                     <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-                        {currentSubcategory && currentSubcategory.replace('-',' ').toUpperCase() ||  currentCategory} 
-                        {subcategory && subcategory.replace('-',' ').toUpperCase()  && <span className="text-green-600"> Products</span>}
+                        {currentSubcategory && currentSubcategory.replace('-', ' ').toUpperCase() || currentCategory.replace('-', ' ').toUpperCase()}
+                        {subcategory && subcategory.replace('-', ' ').toUpperCase() && <span className="text-green-600"> Products</span>}
                     </h1>
                     <p className="text-gray-600 mt-2">
-                        {filteredProducts.length} results found in {currentSubcategory && currentSubcategory.replace('-',' ').toUpperCase() || subcategory && subcategory.replace('-',' ').toUpperCase() }.
+                        {filteredProducts.length} results found in {currentSubcategory && currentSubcategory.replace('-', ' ').toUpperCase() || subcategory && subcategory.replace('-', ' ').toUpperCase()}.
                     </p>
-                    
+
                 </header>
 
                 {/* Mobile Filter Button */}
                 <div className="lg:hidden mb-4">
-                    <button 
+                    <button
                         onClick={() => setIsMobileFilterOpen(true)}
-                        className="w-full flex items-center justify-center p-3 bg-green-600 text-white rounded-lg font-semibold transition hover:bg-green-700 shadow-md"
+                        className="w-full flex items-center justify-center p-3 bg-primary text-white rounded-lg font-semibold transition hover:bg-green-700 shadow-md"
                     >
-                        <Filter className="w-5 h-5 mr-2" /> Show Filters 
+                        <Filter className="w-5 h-5 mr-2" /> Show Filters
                         {activeFiltersCount > 0 && (
                             <span className="ml-2 bg-white text-green-600 px-2 py-0.5 rounded-full text-xs font-bold">
                                 {activeFiltersCount}
@@ -135,20 +139,20 @@ const ProductListPage = () => {
 
                 {/* Main Content Grid (Sidebar + Products) */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    
+
                     {/* 1. Sidebar (Desktop View) */}
                     <div className="hidden lg:block lg:col-span-1">
-                        <FilterSidebar 
-                            subcategories={subcategories} 
+                        <FilterSidebar
+                            subcategories={subcategories}
                             categories={categories}
-                            filters={filters} 
-                            setFilters={setFilters} 
+                            filters={filters}
+                            setFilters={setFilters}
                         />
                     </div>
 
                     {/* 2. Products List */}
                     <div className="lg:col-span-3">
-                        
+
                         {/* Sort and View Controls */}
                         <div className="flex justify-between items-center bg-white p-3 md:p-4 rounded-xl shadow-sm border border-gray-100 mb-6">
                             <div className="flex items-center space-x-2">
@@ -165,7 +169,7 @@ const ProductListPage = () => {
                                     <option value="rating">Top Rated</option>
                                 </select>
                             </div>
-                            
+
                             <div className="flex items-center space-x-2 text-gray-600">
                                 <button onClick={() => setViewMode('grid')} className={`p-2 rounded-lg transition ${viewMode === 'grid' ? 'bg-green-100 text-green-700' : 'hover:bg-gray-100'}`}>
                                     <LayoutGrid className="w-5 h-5" />
@@ -178,9 +182,9 @@ const ProductListPage = () => {
 
                         {/* Product Grid/List Display */}
                         {sortedProducts.length > 0 ? (
-                            <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
+                            <div className={`${viewMode === 'grid' ? 'grid grid-cols-2 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
                                 {sortedProducts.map((product) => (
-                                    viewMode === 'grid' 
+                                    viewMode === 'grid'
                                         ? <ProductCard key={product.id} product={product} />
                                         : <ProductListItem key={product.id} product={product} />
                                 ))}
@@ -207,12 +211,13 @@ const ProductListPage = () => {
                             </button>
                         </div>
                         <div className="p-4">
-                            <FilterSidebar 
-                                subcategories={subcategories} 
-                                filters={filters} 
-                                setFilters={setFilters} 
+                            <FilterSidebar
+                            categories={categories}
+                                subcategories={subcategories}
+                                filters={filters}
+                                setFilters={setFilters}
                             />
-                            <button 
+                            <button
                                 onClick={() => setIsMobileFilterOpen(false)}
                                 className="mt-6 w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition"
                             >
