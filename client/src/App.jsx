@@ -1,3 +1,4 @@
+
 import Navbar from "./components/layout/Navbar";
 import "./App.css";
 import FeatureStrip from "./components/utils-components/FeatureStrip";
@@ -14,6 +15,7 @@ import OrderDetailsPage from "./pages/user-pages/orders/OrderDetailsPage";
 import CancelOrderPage from "./pages/user-pages/orders/CancelOrderPage";
 import OrderListPage from "./pages/user-pages/orders/OrderListPage";
 import ProductListPage from "./pages/products/ProductListPage";
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
@@ -36,7 +38,7 @@ function App() {
           <Route path="/orders" element={<OrderListPage />} />
           <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
           <Route path="/orders/:orderId/cancel" element={<CancelOrderPage />} />
-
+          <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/products/:category" element={<ProductListPage />} />
           <Route path="/products/:category/:subcategory" element={<ProductListPage />} />
 
@@ -46,6 +48,7 @@ function App() {
 
       {/* Footer */}
       <Footer />
+
     </div>
   );
 }
