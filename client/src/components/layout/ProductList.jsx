@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../utils/db.service'
 import ProductCard from '../reusable-components/ProductCard'
 import ProductCardSkeleton from '../skeletons/ProductSkeleton';
-
+import { useNavigate } from 'react-router-dom';
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     // State to manage how many products are currently visible
     const [visibleCount, setVisibleCount] = useState(12); // Show 6 products by default (2 rows on large screens)
-
+    const navigate = useNavigate();
     useEffect(() => {
         db.getProducts().then((data) => {
             setProducts(data);
@@ -34,8 +34,7 @@ const ProductList = () => {
 
     const handleProductCardClick = (product) => {
         console.log("Product clicked:", product);
-        // Add your navigation or modal logic here, e.g.,
-        // router.push(`/products/${product.id}`);
+        navigate(`/product-details/${product.id}`);
     };
 
     return (

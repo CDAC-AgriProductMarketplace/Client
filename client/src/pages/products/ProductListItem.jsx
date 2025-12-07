@@ -1,9 +1,9 @@
 import { Star } from "lucide-react";
 
-const ProductListItem = ({ product }) => (
-    <div className="flex bg-white rounded-xl shadow-md p-4 items-center hover:shadow-lg transition duration-200">
+const ProductListItem = ({ product ,onClick}) => (
+    <div onClick={onClick} className="flex bg-white rounded-xl shadow-md p-4 items-center hover:shadow-lg transition duration-200">
         <img 
-            src={product.imageUrl} 
+            src={product.image} 
             alt={product.name} 
             className="w-20 h-20 object-cover rounded-lg mr-4"
             onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/80x80/6B7280/ffffff?text=Img" }}

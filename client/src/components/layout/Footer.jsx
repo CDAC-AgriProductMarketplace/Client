@@ -43,7 +43,7 @@ export default function Footer() {
               <p className="flex items-start"><PhoneIcon /><span className="ml-3">1300 005 032</span></p>
               <p className="flex items-start"><PhoneIcon /><span className="ml-3">07 5564 6626</span></p>
               <p className="flex items-start"><PhoneIcon /><span className="ml-3">0430 388 124</span></p>
-              <p className="flex items-start"><MailIcon /><span className="ml-3">info@Pulsemedicalsupplies.com.au</span></p>
+              <p className="flex items-start"><MailIcon /><span className="ml-3">info@agriforgesupplies.com</span></p>
             </address>
           </div>
 
@@ -88,7 +88,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/20">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-center items-center text-center">
-          <p className="text-sm">Copyright &copy; 2025. All rights reserved by Pulse Medical Supplies.</p>
+          <p className="text-sm">Copyright &copy; 2025. All rights reserved by AgriForge Supplies.</p>
         </div>
       </div>
     </footer>
