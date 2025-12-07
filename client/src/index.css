@@ -1,6 +1,7 @@
 /* -----------------------------------------
    Tailwind Base Layers
 ------------------------------------------ */
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,7 +20,7 @@
   --secondary: #065F46;
 
   /* Surfaces */
-  --surface-light: #FFFFFF;
+  --surface-light: #6cd5b2;
   --surface-medium: #F9FAFB;
   --surface-dark: #1F2937;
   --surface-darker: #111827;
@@ -27,7 +28,7 @@
   /* Text Colors */
   --text-default: #1F2937;
   --text-secondary: #4B5563;
-  --text-light: #F9FAFB;
+  --text-light: #6cd5b2;
   --text-dark: #1F2937;
 
   /* Border */
@@ -57,6 +58,9 @@ html.dark {
 .bg-secondary { background-color: var(--secondary); }
 
 .bg-surface-light { background-color: var(--surface-light); }
+.hover\:bg-surface-light:hover { background-color: var(--surface-light); }
+.hover\:text-primary:hover { color: var(--primary); }
+
 .bg-surface-medium { background-color: var(--surface-medium); }
 .bg-surface-dark { background-color: var(--surface-dark); }
 .bg-surface-darker { background-color: var(--surface-darker); }
