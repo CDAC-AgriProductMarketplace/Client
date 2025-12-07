@@ -6,7 +6,7 @@ const CategoryCard = ({ category, onClick }) => {
   return (
     <div
       className={`flex flex-col items-center gap-2`}
-      onClick={() => onClick(id)}
+      onClick={() => onClick(category)}
     >
       <div className="relative w-30 h-40  rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 hover:border-2 hover:border-teal-600 cursor-pointer">
         <img

@@ -38,7 +38,7 @@ function App() {
           <Route path="/orders" element={<OrderListPage />} />
           <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
           <Route path="/orders/:orderId/cancel" element={<CancelOrderPage />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/products/:category" element={<ProductListPage />} />
           <Route path="/products/:category/:subcategory" element={<ProductListPage />} />
 

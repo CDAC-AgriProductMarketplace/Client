@@ -4,7 +4,7 @@ import { Filter, Star, Search, ChevronDown, LayoutGrid, List, SlidersHorizontal,
 import FilterSidebar from './FilterSidebar';
 import ProductCard from './ProductCard';
 import ProductListItem from './ProductListItem';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../utils/db.service';
 
 const ProductListPage = () => {
@@ -26,6 +26,11 @@ const ProductListPage = () => {
         maxPrice: 1000,
         rating: null,
     });
+    const navigate = useNavigate();
+     const handleProductCardClick = (product) => {
+        console.log("Product clicked:", product);
+        navigate(`/product-details/${product.id}`);
+    };
 
 
     const productsToFilter = Array.isArray(allProducts) ? allProducts : [];
@@ -185,8 +190,8 @@ const ProductListPage = () => {
                             <div className={`${viewMode === 'grid' ? 'grid grid-cols-2 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
                                 {sortedProducts.map((product) => (
                                     viewMode === 'grid'
-                                        ? <ProductCard key={product.id} product={product} />
-                                        : <ProductListItem key={product.id} product={product} />
+                                        ? <ProductCard key={product.id} product={product} onClick={() => handleProductCardClick(product)} />
+                                        : <ProductListItem key={product.id} product={product} onClick={() => handleProductCardClick(product)} />
                                 ))}
                             </div>
                         ) : (

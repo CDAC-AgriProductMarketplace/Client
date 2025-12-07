@@ -1,9 +1,9 @@
 import { Star } from "lucide-react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onClick }) => {
     const isOutOfStock = !product.stock;
     return (
-        <div className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${isOutOfStock ? 'opacity-70' : ''}`}>
+        <div onClick={onClick} className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${isOutOfStock ? 'opacity-70' : ''}`}>
             {isOutOfStock && (
                 <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
                     Out of Stock

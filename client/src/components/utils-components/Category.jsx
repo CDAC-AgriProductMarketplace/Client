@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../utils/db.service';
 import CategoryCard from './../reusable-components/CategoryCard';
 import ProductCardSkeleton from './../skeletons/ProductSkeleton';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -12,7 +13,7 @@ const Category = () => {
     // const router = useRouter(); // Uncomment for `pages` router
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
     useEffect(() => {
         db.getCategorys().then((data) => {
             setCategories(data);
@@ -23,10 +24,13 @@ const Category = () => {
         });
     }, []);
 
-    const handleCardClick = (categoryId) => {
-        console.log(`Navigating to category with ID: ${categoryId}`);
+    const handleCardClick = (category) => {
+        console.log(`Navigating to category with ID: ${category.name}`);
+        console.log(category.name.toLowerCase().replace(" ","-"));
+        const cat_name=category.name.toLowerCase().replace(" ","-");
         // Example navigation using the App Router:
         // router.push(`/categories/${categoryId}`);
+        navigate(`/products/${cat_name ||category.name}`);
     };
 
     return (<div className="px-2 py-4 justify-items-space-between">
