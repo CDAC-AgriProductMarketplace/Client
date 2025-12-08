@@ -35,6 +35,7 @@ function App() {
           <Route path="/register" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/orders/:orderId" element={<OrderDetails />} />
           <Route path="/orders/:orderId/track" element={<TrackOrder />} />
           <Route path="/orders" element={<OrderListPage />} />

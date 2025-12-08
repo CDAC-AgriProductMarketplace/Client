@@ -5,6 +5,7 @@ import {
   TruckIcon,
   TagIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ export default function CheckoutPage() {
     saveCard: false,
     delivery: "standard",
   });
+  const navigate = useNavigate();
 
 
 
@@ -37,6 +39,7 @@ export default function CheckoutPage() {
     e.preventDefault();
     console.log("Checkout Data:", formData);
     alert("Payment submitted successfully ✅");
+    navigate("/");
   };
 
   return (
