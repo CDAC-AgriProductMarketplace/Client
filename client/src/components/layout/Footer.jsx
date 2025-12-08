@@ -34,9 +34,11 @@ export default function Footer() {
 
           {/* Column 1: Logo & Contact */}
           <div className="space-y-6">
-            <Link to="/" className="inline-block d-flex d-flex-col align-items-center">
+            <Link to="/" className="inline-block d-flex d-flex-row align-items-center bg-white p-2 rounded-md">
+              <div className="flex items-center gap-2 ">
               <img src="/favicon.ico" alt="AgriForge Suppliers" className="h-12 bg-white p-2 rounded-md" />
-            {/* <h3 className='text-primary'>AgriForge</h3> */}
+            <h3 className='text-black text-2xl font-bold'>AgriForge</h3>
+            </div>
             </Link>
             <address className="not-italic space-y-3 text-sm">
               <p className="flex items-start"><LocationIcon /><span className="ml-3">453 Hansen Court, Coomera, 4209, Hinjewadi, Pune</span></p>
@@ -51,7 +53,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4">MY ACCOUNT</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/my-account" className={footerLinkStyle}>My Account</Link></li>
+              <li><Link to="/profile" className={footerLinkStyle}>My Account</Link></li>
               <li><Link to="/product-return" className={footerLinkStyle}>Product Return</Link></li>
               <li><Link to="/privacy-policy" className={footerLinkStyle}>Privacy Policy</Link></li>
               <li><Link to="/collection-statement" className={footerLinkStyle}>Collection Statement</Link></li>

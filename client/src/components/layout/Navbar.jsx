@@ -19,7 +19,6 @@ function Navbar() {
       {/* ====== MAIN HEADER ====== */}
       <div className="bg-white py-4">
         <div className="container mx-auto flex flex-wrap items-center justify-between px-4 gap-4">
-
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
@@ -30,7 +29,7 @@ function Navbar() {
               className="h-10 sm:h-12 w-auto" // Tailwind classes for responsive sizing
 
             />
-            <h3 className='text-primary'>AgriForge</h3>
+           <h3 className='text-black text-2xl font-bold'>AgriForge</h3>
           </Link>
 
           {/* Search Bar (Centered on Desktop) */}

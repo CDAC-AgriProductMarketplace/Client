@@ -24,30 +24,25 @@ const mockProducts = [
   // Add more mock products as needed
 ];
 
-// Mock API response structure for a user's cart
 const mockCartData = [
   { productId: "prod1", quantity: 1 },
   { productId: "prod2", quantity: 2 },
 ];
 
-/**
- * Simulates fetching initial cart data from an API.
- * @returns {Promise<Array>} A promise that resolves with the cart items.
- */
+
 const fetchCartItems = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      // Merge mock cart data with product details
+      
       const cartItems = mockCartData.map(item => {
         const product = mockProducts.find(p => p.id === item.productId);
         return product ? { ...product, quantity: item.quantity } : null;
       }).filter(item => item !== null);
       resolve(cartItems);
-    }, 500); // Simulate network delay
+    }, 500); 
   });
 };
 
-// --- Cart Component ---
 
 function Cart() {
   const navigate = useNavigate();
@@ -114,12 +109,11 @@ function Cart() {
 
   const totals = calculateTotals();
 
-  // 4. Promo Code Handler (Simulated)
+ 
   const applyPromoCode = (e) => {
     e.preventDefault();
-    // Simulate a successful code application
+   
     if (promoCode.toUpperCase() === "SAVE10") {
-      // Apply a fixed $10 discount
       setDiscount(10.00);
       alert("Promo code SAVE10 applied! You saved Rs. 10.00.");
     } else {
@@ -165,7 +159,7 @@ function Cart() {
                   </p>
     
                   <div className="mt-3 flex items-center gap-4">
-                    {/* Quantity Controls */}
+                   
                     <div className="flex items-center border rounded-md divide-x">
                       <button
                         onClick={() => updateQuantity(item.id, -1)}
@@ -289,7 +283,7 @@ function Cart() {
           </button>
           
           <div className="mt-4 text-xs text-yellow-800 bg-yellow-100 p-3 rounded-lg border border-yellow-300">
-            🔒 **Secure Checkout** • Your payment details are encrypted.
+            🔒Secure Checkout • Your payment details are encrypted.
           </div>
         </div>
       </div>
