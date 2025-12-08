@@ -16,6 +16,8 @@ import CancelOrderPage from "./pages/user-pages/orders/CancelOrderPage";
 import OrderListPage from "./pages/user-pages/orders/OrderListPage";
 import ProductListPage from "./pages/products/ProductListPage";
 import ProductDetails from './pages/ProductDetails';
+import CartPage from "./pages/Cart";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   return (
@@ -41,14 +43,19 @@ function App() {
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/products/:category" element={<ProductListPage />} />
           <Route path="/products/:category/:subcategory" element={<ProductListPage />} />
-
+          
+         
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
 
       {/* Footer */}
+
       <Footer />
 
+{/* <Cart/> */}
+
+{/* <CheckoutPage/> */}
     </div>
   );
 }
