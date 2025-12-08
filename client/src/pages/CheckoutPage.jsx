@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   UserIcon,
   CreditCardIcon,
@@ -6,12 +7,44 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function CheckoutPage() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    state: "",
+    country: "",
+    cardName: "",
+    cardNumber: "",
+    expiryCVC: "",
+    useAsBilling: false,
+    saveCard: false,
+    delivery: "standard",
+  });
+
+
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Checkout Data:", formData);
+    alert("Payment submitted successfully ✅");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex justify-center">
-      <div className="max-w-6xl w-full grid grid-cols-3 md:grid-cols-3 gap-3">
-
+      <div className="max-w-6xl w-full grid grid-cols-3 gap-3">
+        
         {/* LEFT SIDE */}
-        <div className="md:col-span-2 space-y-6">
+        <form onSubmit={handleSubmit} className="col-span-2 space-y-6">
 
           {/* Checkout */}
           <div className="bg-white p-6 rounded-xl shadow-sm border">
@@ -20,31 +53,29 @@ export default function CheckoutPage() {
               Provide delivery details and payment to complete your order.
             </p>
 
-            {/* Shipping Address */}
+            {/* Shipping */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <UserIcon className="h-5 w-5 text-gray-500" />
                 Shipping Address
               </h3>
 
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                <Input label="First Name" placeholder="John" />
-                <Input label="Last Name" placeholder="Doe" />
+              <div className="grid grid-cols-2 gap-4">
+                <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} />
+                <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} />
               </div>
 
-              <Input label="Address Line" placeholder="112 Farmstead Rd" />
+              <Input label="Address Line" name="address" value={formData.address} onChange={handleChange} />
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <Input label="City" placeholder="Springfield" />
-                <Input label="Postal Code" placeholder="12345" />
-                <Input label="State/Province" placeholder="CA" />
-                 <Input label="Country" placeholder="United States" />
+              <div className="grid grid-cols-2 gap-4">
+                <Input label="City" name="city" value={formData.city} onChange={handleChange} />
+                <Input label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+                <Input label="State/Province" name="state" value={formData.state} onChange={handleChange} />
+                <Input label="Country" name="country" value={formData.country} onChange={handleChange} />
               </div>
 
-             
-
-              <label className="flex items-center gap-2 cursor-pointer mt-2">
-                <input type="checkbox" className="h-4 w-4" />
+              <label className="flex items-center gap-2 mt-2">
+                <input type="checkbox" name="useAsBilling" checked={formData.useAsBilling} onChange={handleChange} />
                 <span className="text-sm text-gray-700">Use as billing address</span>
               </label>
             </div>
@@ -57,87 +88,78 @@ export default function CheckoutPage() {
               Payment
             </h3>
 
-        
-
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                  <Input label="Cardholder Name" placeholder="John Doe" />
-              <Input label="Card Number" placeholder="4242 4242 4242 4242" />
-            
+            <div className="grid grid-cols-2 gap-4">
+              <Input label="Cardholder Name" name="cardName" value={formData.cardName} onChange={handleChange} />
+              <Input label="Card Number" name="cardNumber" value={formData.cardNumber} onChange={handleChange} />
             </div>
-              <Input label="Expiry / CVC"  placeholder="12/28 · 123" />
-                <label className="flex items-center gap-2 cursor-pointer mt-2">
-                <input type="checkbox" className="h-4 w-4" />
-                <span className="text-sm text-gray-700">Save for future purchases</span>
-              </label>
+
+            <Input label="Expiry / CVC" name="expiryCVC" value={formData.expiryCVC} onChange={handleChange} />
+
+            <label className="flex items-center gap-2 mt-2">
+              <input type="checkbox" name="saveCard" checked={formData.saveCard} onChange={handleChange} />
+              <span className="text-sm text-gray-700">Save for future purchases</span>
+            </label>
           </div>
 
-          {/* Delivery Options */}
+          {/* Delivery */}
           <div className="bg-white p-6 rounded-xl shadow-sm border space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <TruckIcon className="h-5 w-5 text-gray-500" />
               Delivery Options
             </h3>
 
-            <label className="flex items-center justify-between p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <label className="flex justify-between p-3 border rounded-lg cursor-pointer">
               <div className="flex items-center gap-2">
-                <input type="radio" name="delivery" defaultChecked />
+                <input
+                  type="radio"
+                  name="delivery"
+                  value="standard"
+                  checked={formData.delivery === "standard"}
+                  onChange={handleChange}
+                />
                 <span>Standard (3–5 days)</span>
               </div>
               <span>$6.00</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <label className="flex justify-between p-3 border rounded-lg cursor-pointer">
               <div className="flex items-center gap-2">
-                <input type="radio" name="delivery" />
+                <input
+                  type="radio"
+                  name="delivery"
+                  value="express"
+                  checked={formData.delivery === "express"}
+                  onChange={handleChange}
+                />
                 <span>Express (1–2 days)</span>
               </div>
               <span>$14.00</span>
             </label>
           </div>
 
-          <button className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg">
+          <button type="submit"  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg">
             Pay Now
           </button>
+        </form>
 
-          <div className="flex items-center gap-2 text-sm text-gray-600 justify-center">
-            <span className="h-2 w-2 bg-green-500 rounded-full"></span>
-            Transactions are secured & encrypted end-to-end.
-          </div>
-        </div>
-
-        {/* RIGHT SIDE – Order Summary */}
+        {/* RIGHT SIDE */}
         <div className="bg-white p-6 rounded-xl shadow-sm border h-fit space-y-4">
           <h2 className="text-lg font-semibold">Order Summary</h2>
 
-          {/* Items */}
-          <OrderItem
-            title="Compact Tractor Oil (5L)"
-            qty="Qty 1"
-            price="$38.00"
-            img="https://images.pexels.com/photos/210014/pexels-photo-210014.jpeg"
-          />
+          <OrderItem title="Compact Tractor Oil (5L)" qty="Qty 1" price="$38.00" />
+          <OrderItem title="Organic NPK Fertilizer (25kg)" qty="Qty 1" price="$24.00" />
 
-          <OrderItem
-            title="Organic NPK Fertilizer (25kg)"
-            qty="Qty 1"
-            price="$24.00"
-            img="https://images.pexels.com/photos/616833/pexels-photo-616833.jpeg"
-          />
-
-          {/* Price Summary */}
           <div className="border-t pt-4 space-y-2 text-sm">
             <Row label="Items (2)" value="$62.00" />
             <Row label="Delivery" value="$6.00" />
             <Row label="Taxes" value="$5.16" />
-
             <div className="pt-2 border-t flex justify-between font-semibold">
               <span>Total</span>
               <span>$73.16</span>
             </div>
           </div>
 
-          {/* Promo Code */}
-          <button className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 py-2 rounded-lg text-sm">
+          <button className="w-full flex justify-center gap-2 bg-gray-100 py-2 rounded-lg text-sm">
             <TagIcon className="h-4 w-4" />
             Add promo code
           </button>
@@ -147,33 +169,28 @@ export default function CheckoutPage() {
   );
 }
 
-/* ---------- COMPONENTS ---------- */
+/* ---------- Components ---------- */
 
-function Input({ label, placeholder }) {
+function Input({ label, name, value, onChange }) {
   return (
-    <div className="space-y-1">
+    <div>
       <label className="text-sm text-gray-700">{label}</label>
       <input
-        className="w-full border rounded-lg p-2 focus:outline-green-500"
-        placeholder={placeholder}
+        className="w-full border rounded-lg p-2"
+        name={name}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
 }
 
-function OrderItem({ title, qty, price, img }) {
+function OrderItem({ title, qty, price }) {
   return (
-    <div className="flex justify-between items-center">
-      <div className="flex gap-3">
-        <img
-          src={img}
-          className="h-12 w-12 rounded-lg object-cover"
-          alt={title}
-        />
-        <div>
-          <p className="text-sm font-medium">{title}</p>
-          <p className="text-xs text-gray-500">{qty}</p>
-        </div>
+    <div className="flex justify-between text-sm">
+      <div>
+        <p className="font-medium">{title}</p>
+        <p className="text-gray-500">{qty}</p>
       </div>
       <span>{price}</span>
     </div>
