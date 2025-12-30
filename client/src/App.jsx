@@ -18,6 +18,7 @@ import ProductListPage from "./pages/products/ProductListPage";
 import ProductDetails from './pages/ProductDetails';
 import CartPage from "./pages/Cart";
 import CheckoutPage from "./pages/CheckoutPage";
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -33,30 +34,58 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/orders/:orderId" element={<OrderDetails />} />
-          <Route path="/orders/:orderId/track" element={<TrackOrder />} />
-          <Route path="/orders" element={<OrderListPage />} />
-          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
-          <Route path="/orders/:orderId/cancel" element={<CancelOrderPage />} />
+
+          <Route path="/profile" element={<ProtectedRoute allowedRoles={['CUSTOMER']}>
+            <Profile />
+          </ProtectedRoute>} />
+          
+          <Route path="/cart" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <Cart />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders/:orderId" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <OrderDetails />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders/:orderId/track" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}> 
+            <TrackOrder />
+          </ProtectedRoute>} />
+
+          <Route path="/orders" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+                <OrderListPage />
+              </ProtectedRoute>
+          } />
+          <Route path="/orders/:orderId" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <OrderDetailsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders/:orderId/cancel" element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <CancelOrderPage />
+            </ProtectedRoute>
+          } />
+
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/products/:category" element={<ProductListPage />} />
           <Route path="/products/:category/:subcategory" element={<ProductListPage />} />
-          
-         
+
+
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
 
-      {/* Footer */}
-
       <Footer />
 
-{/* <Cart/> */}
-
-{/* <CheckoutPage/> */}
     </div>
   );
 }
