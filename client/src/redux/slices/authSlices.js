@@ -11,8 +11,8 @@ export const loginUser = createAsyncThunk(
           token: 'eyJhbGciOiJIUzI1Ni...', 
           user: {
             user_id: 101,
-            name: credentials.identifier.split('@')[0], 
-            email: credentials.identifier,
+            name: credentials.username.split('@')[0], 
+            email: credentials.username,
             role: credentials.role, 
             status: 'ACTIVE'
           }
