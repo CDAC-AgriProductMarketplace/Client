@@ -19,8 +19,24 @@ import ProductDetails from './pages/ProductDetails';
 import CartPage from "./pages/Cart";
 import CheckoutPage from "./pages/CheckoutPage";
 import ProtectedRoute from './ProtectedRoute';
+import { useDispatch } from "react-redux";
+import { logout } from "./redux/slices/authSlices";
+import { useEffect } from "react";
+import { isTokenExpired } from "./services/AuthService";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    // const token = localStorage.getItem('token');
+
+    // if (token && isTokenExpired(token)) {
+    //   dispatch(logout());
+    // }
+
+  }, []);
+
   return (
     <div className="font-[Geist] antialiased flex flex-col min-h-screen bg-gray-50 text-gray-800">
       <Navbar />

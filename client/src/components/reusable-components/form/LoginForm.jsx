@@ -37,7 +37,7 @@ const LoginForm = ({ setNotification }) => {
       } else {
         setNotification({
           type: "error",
-          message: "Invalid username or password.",
+          message:resultAction.payload|| "Invalid username or password.",
         });
         console.error("Login Failed:", resultAction.payload);
       }

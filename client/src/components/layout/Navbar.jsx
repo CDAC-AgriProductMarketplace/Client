@@ -57,7 +57,7 @@ function Navbar() {
                 <p className="font-bold text-base whitespace-nowrap">96 0492 6181</p>
               </div>
             </div>
-            <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+            <Link to={isAuthenticated ? "/cart":"/login"} aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
               <ShoppingBagIcon className="h-6 w-6 text-primary cursor-pointer" />
               <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
@@ -84,16 +84,17 @@ function Navbar() {
             <a href="tel:9604926181" aria-label="Call us" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
               <PhoneIcon className={`h-6 w-6 text-primary`} />
             </a>
-            <Link to="/cart" aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
+             <Link to={isAuthenticated ? "/cart":"/login"} aria-label="Shopping Cart" className="relative p-2 rounded-full hover:bg-gray-100 transition-colors">
               <ShoppingBagIcon className={`h-6 w-6 text-primary`} />
               <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
             </Link>
+             {!isAuthenticated ?
             <Link to="/login" aria-label="Log in or register" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
               <UserIcon className={`h-6 w-6 text-primary`} />
             </Link>
-            <Link to="/profile" aria-label="Profile" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+           : <Link to="/profile" aria-label="Profile" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
               <UserIcon className={`h-6 w-6 text-primary`} />
-            </Link>
+            </Link>}
           </div>
 
         </div>
