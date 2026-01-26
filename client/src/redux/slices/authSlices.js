@@ -1,25 +1,64 @@
 //auth Slice
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { decodeJwt, login, register } from '../../services/AuthService';
 
 export const loginUser = createAsyncThunk(
-  'auth/login',
+  '/user/auth/login',
   async (credentials, thunkAPI) => {
     try {
-    
-      const test = {
-        data: {
-          token: 'eyJhbGciOiJIUzI1Ni...', 
-          user: {
-            user_id: 101,
-            name: credentials.username.split('@')[0], 
-            email: credentials.username,
-            role: credentials.role, 
-            status: 'ACTIVE'
-          }
+      const response = await login(credentials);
+
+      console.log(response);
+
+      const data = decodeJwt(response.data.data.token);
+
+      const payload = {
+        token: response.data.data.token,
+        user: {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+          status : 'ACTIVE'
+        }
+
+      };
+
+      return payload;
+
+    } catch (error) {
+      console.log(error);
+
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  '/user/auth/register-customer',
+  async (credentials, thunkAPI) => {
+    try {
+      console.log(credentials);
+
+      const response = await register(credentials);
+      if (response.status != 201) throw new Error(response.data.message);
+
+      const token = response.data.data.token;
+
+      const data = decodeJwt(token);
+      console.log(response, data);
+
+      const payload = {
+        token: token,
+        user: {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+          status : 'ACTIVE'
         }
       };
 
-      return test.data;
+      return payload;
 
     } catch (error) {
       const message = error.response?.data?.message || error.message;
@@ -27,6 +66,7 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -46,7 +86,7 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
     },
     setRegistrationData: (state, action) => {
-      state.user = action.payload; 
+      state.user = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -61,6 +101,22 @@ const authSlice = createSlice({
         localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      })
+      .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

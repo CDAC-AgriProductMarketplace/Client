@@ -1,12 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import PasswordInput from './PasswordInput';
 import { use, useState } from 'react';
+import { getOtp, register, verifyOtp } from '../../../services/AuthService';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../../redux/slices/authSlices';
 
 const RegisterForm = ({ setNotification }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
@@ -48,55 +54,77 @@ const RegisterForm = ({ setNotification }) => {
     return true;
   };
 
-  const handleGetOTP = () => {
+  const handleGetOTP =async () => {
 
     try {
-      if (!form.mobile.trim() || form.mobile.trim().length !== 10) {
+     
+      // if (!form.mobile.trim() || form.mobile.trim().length !== 10) {
+      //   setNotification({
+      //     type: 'error',
+      //     message: 'Please enter your mobile number.',
+      //   });
+      //   return;
+      // }
+      if (!form.email.trim()) {
         setNotification({
           type: 'error',
-          message: 'Please enter your mobile number.',
+          message: 'Please enter your email address.',
         });
         return;
       }
       setIsLoading(true);
       setNotification(null);
-      setTimeout(() => {
+
+       const response = await getOtp(form.email);
+
+
         setNotification({
           type: 'success',
-          message: 'OTP sent to your mobile number.',
+          message:response.data.message || 'OTP sent to your email.',
         });
+        setIsOtpVerified(response.data.data.otpIsVerified || false);
+        setIsOtpSent(true);
         setIsLoading(false);
-      }, 1000);
+      
     } catch (error) {
       setNotification({
         type: 'error',
         message: 'Failed to send OTP. Please try again.',
       });
+       setIsOtpSent(false);
       setIsLoading(false);
     }
   }
 
-  const handleVerifyOTP = () => {
+  const handleVerifyOTP = async () => {
     try {
       setIsLoading(true);
       setNotification(null);
 
-      if (form.otp.trim().length !== 4) {
+      if (form.otp.trim().length !== 6) {
         throw new Error('Invalid OTP');
       }
-      setTimeout(() => {
-        setIsOtpVerified(true);
+      
+
+      const response= await verifyOtp(form.email,form.otp);
+      console.log(response);
+      
+      if(response.status!=200 && response.data.otpIsVerified!==true){
+        throw new Error(response.data.message || 'OTP verification failed or Invalid OTP');
+      }
+        setIsOtpVerified(response.data.data.otpIsVerified || false);
         setNotification({
           type: 'success',
           message: 'OTP verified successfully.',
         });
         setIsLoading(false);
-      }, 1000);
+     
     } catch (error) {
+      console.error(error);
       setIsOtpVerified(false);
       setNotification({
         type: 'error',
-        message: error.message || 'OTP verification failed. Please try again.',
+        message: error.response?.data?.message || 'OTP verification failed. Please try again.',
       });
       setIsLoading(false);
     }
@@ -117,16 +145,35 @@ const RegisterForm = ({ setNotification }) => {
 
     setIsLoading(true);
     setNotification(null);
+try {
+    const resultAction = await dispatch(registerUser({...form, isOtpVerified}));
+    if (registerUser.fulfilled.match(resultAction)) {
+      setNotification({
+        type: 'success',
+        message: 'Registration successful!',
+      });
+      navigate("/");
+      setIsLoading(false);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    } else {
+      setNotification({
+        type: 'error',
+        message: resultAction.payload || 'Registration failed. Please try again.',
+      });
 
-    setNotification({
-      type: "success",
-      message: "Registration successful! Please check your email.",
-    });
+      setIsLoading(false);
+    }
 
-
-    setIsLoading(false);
+      // navigate("/")
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setNotification({
+        type: 'error',
+        message: 'Registration failed. Please try again.',
+      });
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -146,21 +193,12 @@ const RegisterForm = ({ setNotification }) => {
         id="reg-email"
         label="Email Address"
         type="email"
+        disabled={isOtpVerified}
         value={form.email}
         onChange={e => setForm({ ...form, email: e.target.value })}
         placeholder="your@email.com"
       />
-
-      <FormInput
-        id="reg-mobile"
-        label="Mobile Number"
-        disabled={isOtpVerified}
-        type="tel"
-        value={form.mobile}
-        onChange={e => setForm({ ...form, mobile: e.target.value })}
-        placeholder="Enter 10-digit mobile number"
-      />
-      {!isOtpVerified && (<>
+         {!isOtpVerified && (<>
         <div className="flex justify-between items-center mt-2 mb-4">
           <Link type="button" onClick={handleGetOTP} className=" w-30 h-10 flex justify-center items-center bg-green-200 text-gray-800 font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors shadow-md">Get OTP</Link>
           <Link type="button" onClick={handleResendOTP} className="text-[#01B763] d-flex justify-right">Resend OTP</Link>
@@ -173,10 +211,21 @@ const RegisterForm = ({ setNotification }) => {
         disabled={isOtpVerified}
         value={form.otp}
         onChange={e => setForm({ ...form, otp: e.target.value })}
-        placeholder="Enter the OTP sent to your mobile"
+        placeholder="Enter the OTP sent to your email"
       />
       {!isOtpVerified && <button type="button" onClick={handleVerifyOTP} className="w-full flex justify-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition-colors shadow-md">Verify OTP</button>}
 
+
+      <FormInput
+        id="reg-mobile"
+        label="Mobile Number"
+        disabled={isOtpVerified}
+        type="tel"
+        value={form.mobile}
+        onChange={e => setForm({ ...form, mobile: e.target.value })}
+        placeholder="Enter 10-digit mobile number"
+      />
+   
       <PasswordInput
         id="reg-password"
         label="Password"

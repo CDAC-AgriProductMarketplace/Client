@@ -3,19 +3,19 @@ import {
   Lock,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import EditProfileModal from './EditProfileModal'; // Assume this file exists
+import EditProfileModal from './EditProfileModal'; 
+import { useSelector } from 'react-redux';
 
 const ProfileCard = ({ userData }) => {
-  // Use state to manage the user data and update the display
+ 
   const [userDataState, setUserDataState] = useState(userData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Function to handle saving the updated data from the modal
-  const handleSave = (updatedData) => {
-    setUserDataState(updatedData);
+const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
+ 
+  const handleSave = (user) => {
+    setUserDataState(user);
     setIsModalOpen(false);
-    console.log("Profile updated:", updatedData);
-    // In a real app, you would call an API here to persist the changes
+    console.log("Profile updated:", user);
   };
 
   return (
@@ -26,14 +26,14 @@ const ProfileCard = ({ userData }) => {
             <User className="w-6 h-6 text-green-700" />
           </div>
           <div>
-            <p className="text-lg font-semibold text-gray-800">{userDataState.name}</p>
+            <p className="text-lg font-semibold text-gray-800">{user.name}</p>
            
           </div>
         </div>
 
         <div className="flex justify-between items-center mb-4 text-sm">
            <p className="text-sm text-gray-500">
-              {userDataState.mobile}  {userDataState.email}
+              {user.mobile}  {user.email}
             </p>
          
         </div>
@@ -59,7 +59,7 @@ const ProfileCard = ({ userData }) => {
       <EditProfileModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        userData={{ name: userDataState.name, mobile: userDataState.mobile, email: userDataState.email }}
+        userData={{ name: user.name, mobile: user.mobile, email: user.email }}
         onSave={handleSave}
       />
     </>
