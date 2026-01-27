@@ -6,7 +6,7 @@ import {
   TagIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 export default function CheckoutPage() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -35,11 +35,25 @@ export default function CheckoutPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Checkout Data:", formData);
-    alert("Payment submitted successfully ✅");
-    navigate("/");
+    // console.log("Checkout Data:", formData);
+    // alert("Payment submitted successfully");
+    // navigate("/");
+
+    try{
+      // write correct api to send data in backend
+      const res = await axios.post("http://localhost:3000/api/user/address/addAddress",formData);
+     console.log("Server Response:", res.data);
+     alert("Payment submitted successfully");
+     navigate("/");
+      
+    }
+    catch(error){
+console.log("Checkout Error: ",error.message);
+alert("Failed to submit checkout")
+
+    }
   };
 
   return (
