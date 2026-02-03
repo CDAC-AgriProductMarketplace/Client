@@ -80,9 +80,7 @@ export const isTokenExpired = (token) => {
     return decoded.exp < currentTime; 
 
   } catch (error) {
-    console.log(error);
     return true;
-    
   }
 };
 

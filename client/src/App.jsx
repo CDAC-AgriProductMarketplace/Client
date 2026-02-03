@@ -25,6 +25,13 @@ import { useEffect } from "react";
 
 function App() {
   // const dispatch = useDispatch();
+import { useDispatch } from "react-redux";
+import { logout } from "./redux/slices/authSlices";
+import { useEffect } from "react";
+import { isTokenExpired } from "./services/AuthService";
+
+function App() {
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
@@ -49,17 +56,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/orders/:orderId" element={<OrderDetails />} />
-          <Route path="/orders/:orderId/track" element={<TrackOrder />} />
-          <Route path="/orders" element={<OrderListPage />} />
-          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
-          <Route path="/orders/:orderId/cancel" element={<CancelOrderPage />} />
-
-          <Route path="/products/:category" element={<ProductListPage />} />
-          <Route path="/products/:category/:subcategory" element={<ProductListPage />} />
-
 
           <Route path="/profile" element={<ProtectedRoute allowedRoles={['CUSTOMER']}>
             <Profile />
@@ -73,7 +69,6 @@ function App() {
           <Route path="/checkout" element={
             <ProtectedRoute allowedRoles={['CUSTOMER']}>
               <CheckoutPage />
-              
             </ProtectedRoute>
           } />
           <Route path="/orders/:orderId" element={
@@ -111,7 +106,6 @@ function App() {
         </Routes>
       </div>
 
-      {/* Footer */}
       <Footer />
      
 

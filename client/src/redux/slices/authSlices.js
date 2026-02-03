@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk(
       console.log(response);
 
       const data = decodeJwt(response.data.data.token);
-       
+
       const payload = {
         token: response.data.data.token,
         user: {

@@ -4,6 +4,7 @@ import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { loadCart, removeFromCart, updateQuantity } from "../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+
 import CheckoutPage from "./CheckoutPage";
 const mockCartData = [
   { productId: "prod1", quantity: 1 },
