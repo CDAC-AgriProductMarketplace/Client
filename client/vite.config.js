@@ -11,4 +11,12 @@ export default defineConfig({
     open: true,     // ✅ This will auto-open the browser
     port: 5173,     // (optional) set custom port
   },
+  proxy:{
+    "/api":{
+      target:"http://localhost:8081",
+      changeOrigin:true,
+      secure:false
+    }
+  }
+  ,
 })

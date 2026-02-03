@@ -6,8 +6,12 @@ import {
   TagIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function CheckoutPage() {
+  const navigate = useNavigate();
+  const [addressSaved, setAddressSaved] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,13 +23,9 @@ export default function CheckoutPage() {
     cardName: "",
     cardNumber: "",
     expiryCVC: "",
-    useAsBilling: false,
     saveCard: false,
     delivery: "standard",
   });
-  const navigate = useNavigate();
-
-
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,56 +35,89 @@ export default function CheckoutPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Checkout Data:", formData);
-    alert("Payment submitted successfully ✅");
+  /* ================= SAVE ADDRESS ================= */
+  const handleSaveAddress = async () => {
+    try {
+      const addressPayload = {
+        deliveryAddress: `${formData.firstName} ${formData.lastName}`, // REQUIRED
+        street: formData.address,                                     // REQUIRED
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        pincode: formData.postalCode,                                 // REQUIRED
+      };
+
+      const res = await api.post("/user/address", addressPayload);
+
+      console.log("Address saved:", res.data);
+      alert("Address saved successfully");
+      setAddressSaved(true);
+    } catch (error) {
+      console.error("Address Error:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Failed to save address");
+    }
+  };
+
+  /* ================= PAYMENT ================= */
+  const handlePayment = () => {
+    if (!addressSaved) {
+      alert("Please save address before payment ❗");
+      return;
+    }
+
+    const paymentPayload = {
+      cardName: formData.cardName,
+      cardNumber: formData.cardNumber,
+      expiryCVC: formData.expiryCVC,
+      saveCard: formData.saveCard,
+      delivery: formData.delivery,
+    };
+
+    console.log("Payment data:", paymentPayload);
+
+    // 🔜 Integrate Razorpay / Stripe here
+    alert("Payment successful 💳");
     navigate("/");
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex justify-center">
       <div className="max-w-6xl w-full grid grid-cols-3 gap-3">
-        
+
         {/* LEFT SIDE */}
-        <form onSubmit={handleSubmit} className="col-span-2 space-y-6">
+        <div className="col-span-2 space-y-6">
 
-          {/* Checkout */}
+          {/* SHIPPING ADDRESS */}
           <div className="bg-white p-6 rounded-xl shadow-sm border">
-            <h2 className="text-xl font-semibold mb-4">Checkout</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              Provide delivery details and payment to complete your order.
-            </p>
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <UserIcon className="h-5 w-5 text-gray-500" />
+              Shipping Address
+            </h2>
 
-            {/* Shipping */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold flex items-center gap-2">
-                <UserIcon className="h-5 w-5 text-gray-500" />
-                Shipping Address
-              </h3>
-
-              <div className="grid grid-cols-2 gap-4">
-                <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} />
-                <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} />
-              </div>
-
-              <Input label="Address Line" name="address" value={formData.address} onChange={handleChange} />
-
-              <div className="grid grid-cols-2 gap-4">
-                <Input label="City" name="city" value={formData.city} onChange={handleChange} />
-                <Input label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
-                <Input label="State/Province" name="state" value={formData.state} onChange={handleChange} />
-                <Input label="Country" name="country" value={formData.country} onChange={handleChange} />
-              </div>
-
-              <label className="flex items-center gap-2 mt-2">
-                <input type="checkbox" name="useAsBilling" checked={formData.useAsBilling} onChange={handleChange} />
-                <span className="text-sm text-gray-700">Use as billing address</span>
-              </label>
+            <div className="grid grid-cols-2 gap-4">
+              <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} />
+              <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} />
             </div>
+
+            <Input label="Street Address" name="address" value={formData.address} onChange={handleChange} />
+
+            <div className="grid grid-cols-2 gap-4">
+              <Input label="City" name="city" value={formData.city} onChange={handleChange} />
+              <Input label="Pincode" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+              <Input label="State" name="state" value={formData.state} onChange={handleChange} />
+              <Input label="Country" name="country" value={formData.country} onChange={handleChange} />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleSaveAddress}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 mt-4 rounded-lg"
+            >
+              Save Address
+            </button>
           </div>
 
-          {/* Payment */}
+          {/* PAYMENT */}
           <div className="bg-white p-6 rounded-xl shadow-sm border space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <CreditCardIcon className="h-5 w-5 text-gray-500" />
@@ -98,13 +131,13 @@ export default function CheckoutPage() {
 
             <Input label="Expiry / CVC" name="expiryCVC" value={formData.expiryCVC} onChange={handleChange} />
 
-            <label className="flex items-center gap-2 mt-2">
+            <label className="flex items-center gap-2">
               <input type="checkbox" name="saveCard" checked={formData.saveCard} onChange={handleChange} />
               <span className="text-sm text-gray-700">Save for future purchases</span>
             </label>
           </div>
 
-          {/* Delivery */}
+          {/* DELIVERY */}
           <div className="bg-white p-6 rounded-xl shadow-sm border space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <TruckIcon className="h-5 w-5 text-gray-500" />
@@ -113,13 +146,7 @@ export default function CheckoutPage() {
 
             <label className="flex justify-between p-3 border rounded-lg cursor-pointer">
               <div className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="delivery"
-                  value="standard"
-                  checked={formData.delivery === "standard"}
-                  onChange={handleChange}
-                />
+                <input type="radio" name="delivery" value="standard" checked={formData.delivery === "standard"} onChange={handleChange} />
                 <span>Standard (3–5 days)</span>
               </div>
               <span>$6.00</span>
@@ -127,23 +154,21 @@ export default function CheckoutPage() {
 
             <label className="flex justify-between p-3 border rounded-lg cursor-pointer">
               <div className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="delivery"
-                  value="express"
-                  checked={formData.delivery === "express"}
-                  onChange={handleChange}
-                />
+                <input type="radio" name="delivery" value="express" checked={formData.delivery === "express"} onChange={handleChange} />
                 <span>Express (1–2 days)</span>
               </div>
               <span>$14.00</span>
             </label>
           </div>
 
-          <button type="submit"  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg">
+          <button
+            type="button"
+            onClick={handlePayment}
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg"
+          >
             Pay Now
           </button>
-        </form>
+        </div>
 
         {/* RIGHT SIDE */}
         <div className="bg-white p-6 rounded-xl shadow-sm border h-fit space-y-4">
@@ -172,7 +197,7 @@ export default function CheckoutPage() {
   );
 }
 
-/* ---------- Components ---------- */
+/* ---------- REUSABLE COMPONENTS ---------- */
 
 function Input({ label, name, value, onChange }) {
   return (

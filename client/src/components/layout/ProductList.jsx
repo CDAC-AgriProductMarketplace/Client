@@ -1,54 +1,59 @@
+import React, { useEffect, useState } from "react";
+import ProductCard from "../reusable-components/ProductCard";
+import ProductCardSkeleton from "../skeletons/ProductSkeleton";
+import { useNavigate } from "react-router-dom";
 
-import React, { useEffect, useState } from 'react'
-import { db } from '../../utils/db.service'
-import ProductCard from '../reusable-components/ProductCard'
-import ProductCardSkeleton from '../skeletons/ProductSkeleton';
-import { useNavigate } from 'react-router-dom';
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    // State to manage how many products are currently visible
-    const [visibleCount, setVisibleCount] = useState(12); // Show 6 products by default (2 rows on large screens)
-    const navigate = useNavigate();
-    useEffect(() => {
-        db.getProducts().then((data) => {
-            setProducts(data);
-        }).catch((error) => {
-            console.error("Error fetching products:", error);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }, []);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(12);
 
-    const productsToShow = products.slice(0, visibleCount);
-    const hasMoreProducts = visibleCount < products.length;
+  const navigate = useNavigate();
 
-    const handleSeeAll = () => {
-        setVisibleCount(prevCount => prevCount + 6);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/products/");
+        if (!res.ok) throw new Error("Failed to fetch products");
+        const data = await res.json();
+        setProducts(data);
+       // console.log(products)
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Reset view
-    const handleShowLess = () => {
-        setVisibleCount(6);
-    };
+    fetchProducts();
+  }, []);
 
-    const handleProductCardClick = (product) => {
-        console.log("Product clicked:", product);
-        navigate(`/product-details/${product.id}`);
-    };
+  const productsToShow = products.slice(0, visibleCount);
+  const hasMoreProducts = visibleCount < products.length;
+console.log(products);
 
-    return (
+  const handleSeeMore = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
+
+  const handleShowLess = () => {
+    setVisibleCount(12);
+  };
+
+  const handleProductCardClick = (product) => {
+    navigate(`/product-details/${product.id}`);
+  };
+
+  return (
     <div className="p-3 pt-1">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
-        <h2 className="sm:text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-0">
-          Featured Products
-        </h2>
-      </div>
+      <h2 className="sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        Featured Products
+      </h2>
 
       {loading && <ProductCardSkeleton />}
 
       {!loading && products.length === 0 && (
-        <div className="text-center">No products available.</div>
+        <div className="text-center text-gray-500">No products available.</div>
       )}
 
       {!loading && products.length > 0 && (
@@ -56,30 +61,30 @@ const ProductList = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {productsToShow.map((product) => (
               <ProductCard
-                key={product.id}
+                key={product.product_id}
                 product={product}
-                onClick={handleProductCardClick}
+                onClick={() => handleProductCardClick(product)}
               />
             ))}
           </div>
 
           <div className="flex justify-center mt-6">
-            {hasMoreProducts && (
+            {hasMoreProducts ? (
               <button
-                onClick={handleSeeAll}
-                className="p-1 bg-teal-600 text-white sm:font-medium md:font-semibold rounded-lg shadow-md hover:bg-teal-700 transition duration-300"
+                onClick={handleSeeMore}
+                className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
               >
                 See More
               </button>
-            )}
-
-            {!hasMoreProducts && products.length > 6 && (
-              <button
-                onClick={handleShowLess}
-                className="px-6 py-3 bg-gray-400 text-white font-semibold rounded-lg shadow-md hover:bg-gray-500 transition duration-300"
-              >
-                Show Less
-              </button>
+            ) : (
+              products.length > 12 && (
+                <button
+                  onClick={handleShowLess}
+                  className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+                >
+                  Show Less
+                </button>
+              )
             )}
           </div>
         </>
