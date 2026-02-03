@@ -1,4 +1,4 @@
-const FormInput = ({ id, label, type = "text", placeholder, ...props }) => (
+const FormInput = ({ id, label,value, onChange, type = "text", placeholder, ...props }) => (
   <div>
     <label
       htmlFor={id}
@@ -10,6 +10,8 @@ const FormInput = ({ id, label, type = "text", placeholder, ...props }) => (
       type={type}
       id={id}
       name={id}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
       className="w-full px-4 py-3 border border-gray-300 
                  rounded-lg focus:outline-none 

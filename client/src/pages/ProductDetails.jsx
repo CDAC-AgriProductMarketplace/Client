@@ -10,7 +10,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/products/1")
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/products/1`)
       .then((res) => res.json())
       .then((data) => setProduct(data))
       .catch(() => {

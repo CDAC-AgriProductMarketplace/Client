@@ -1,37 +1,55 @@
 
-// ------------------ Login Form ---------------------
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import PasswordInput from "./PasswordInput";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../redux/slices/authSlices";
 
 const LoginForm = ({ setNotification }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
     setNotification(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const resultAction = await dispatch(loginUser({
+        ...form,
+        role: "CUSTOMER"
+      }));
 
-    const isSuccess = Math.random() > 0.5;
-
-    if (isSuccess) {
-      setNotification({
-        type: "success",
-        message: "Successfully logged in! Redirecting...",
-      });
-    } else {
+      if (loginUser.fulfilled.match(resultAction)) {
+        console.log("Login Success:", resultAction.payload);
+        setNotification({
+          type: "success",
+          message: "Successfully logged in! Redirecting...",
+        });
+        navigate('/');
+      } else {
+        setNotification({
+          type: "error",
+          message:resultAction.payload|| "Invalid username or password.",
+        });
+        console.error("Login Failed:", resultAction.payload);
+      }
+    } catch (error) {
       setNotification({
         type: "error",
-        message: "Invalid username or password.",
+        message: "Unexpected Error during login",
       });
+      console.error("Unexpected Error during login:", error);
+    }finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -40,8 +58,10 @@ const LoginForm = ({ setNotification }) => {
         id="username"
         label="Username Or Email Address"
         placeholder="Username or email address"
+        value={form.username}
+        onChange={(e) => setForm({ ...form, username: e.target.value })}
       />
-      <PasswordInput id="password" label="Password" placeholder="Password" />
+      <PasswordInput id="password" label="Password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
 
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center">

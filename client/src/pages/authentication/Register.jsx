@@ -7,7 +7,6 @@ function Register() {
  <div className="min-h-screen bg-gray-50 flex justify-center py-10 px-4">
       <div className="w-full max-w-xl space-y-6">
 
-        {/* Form Card */}
         <div className="bg-white shadow-md rounded-xl p-8 space-y-6">
 
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -18,7 +17,6 @@ function Register() {
             Join AgriForge to buy and sell agricultural products securely.
           </p>
 
-          {/* Name Inputs */}
           <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           
             <input
@@ -33,17 +31,15 @@ function Register() {
             />
           </div>
 
-          {/* Email */}
+      
           <input type="email" placeholder="Email" className="input-field" />
 
-          {/* Phone */}
           <input
             type="text"
             placeholder="Phone (optional)"
             className="input-field"
           />
 
-          {/* Passwords */}
           <input type="password" placeholder="Password" className="input-field" />
           <input
             type="password"
@@ -51,7 +47,6 @@ function Register() {
             className="input-field"
           />
 
-          {/* Role Selection */}
           <div className="space-y-2">
             <p className="text-gray-700 font-medium">I am registering as</p>
 
@@ -80,7 +75,7 @@ function Register() {
             </div>
           </div>
 
-          {/* Terms & Sign in */}
+         
           <div className="flex justify-between items-center text-sm">
             <label className="flex items-center gap-2">
               <input type="checkbox" className="w-4 h-4" />
@@ -92,13 +87,13 @@ function Register() {
             </a>
           </div>
 
-          {/* Submit Button */}
+          
           <button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2">
             <span>👤</span> Create Account
           </button>
         </div>
 
-        {/* Secure verification card */}
+      
         <div className="bg-white shadow-md rounded-xl p-6">
           <h3 className="text-lg font-semibold text-gray-800">
             Secure verification
