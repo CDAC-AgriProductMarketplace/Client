@@ -1,7 +1,7 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-const PasswordInput = ({ id, label, placeholder }) => {
+const PasswordInput = ({ id, label, placeholder, onChange, value }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -18,6 +18,8 @@ const PasswordInput = ({ id, label, placeholder }) => {
           type={isVisible ? "text" : "password"}
           id={id}
           name={id}
+          onChange={onChange}
+          value={value}
           placeholder={placeholder}
           className="w-full px-4 py-3 border border-gray-300 
                      rounded-lg focus:outline-none 

@@ -11,7 +11,6 @@ import UserOrders from './orders/UserOrders';
 import OrderListPage from './orders/OrderListPage';
 import { Link } from 'react-router-dom';
 
-// --- Data Mockup (to populate the components) ---
 const userData = {
   name: "Ramesh Kumar",
   mobile: "+91 98765 43210",

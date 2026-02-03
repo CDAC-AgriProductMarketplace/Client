@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Filter, Star, Search, ChevronDown, LayoutGrid, List, SlidersHorizontal, ArrowDownWideNarrow, X } from 'lucide-react';
 
 import FilterSidebar from './FilterSidebar';
